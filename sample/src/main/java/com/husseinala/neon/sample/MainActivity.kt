@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity() {
 
         val picasso = Picasso.Builder(applicationContext).build()
 
+
         setContent { PicassoSample(picasso) }
     }
 }
@@ -62,21 +63,4 @@ fun SampleScreen(title: String) {
 @Composable
 fun Center(children: @Composable () -> Unit = emptyContent()) {
     Box(modifier = Modifier.fillMaxSize(), gravity = Alignment.Center, children = children)
-}
-
-@Composable
-fun UserListItem(user: User) {
-    Column {
-        Neon(
-            url = user.profileImage,
-            // Optional: Any Transformations to be applied to the image, such as rounded corners or scale type.
-            transformation = Transformation.centerCrop(),
-            // Optional: Any Modifiers to be applied to the image container, such as view size or paddings.
-            modifier = Modifier.fillMaxWidth().aspectRatio(1.7f)
-                .padding(horizontal = 16.dp, vertical = 8.dp),
-            onLoading = { /* Optional: the widget to be displayed while the image is being downloaded */ },
-            onError = { /* Optional: the widget to be displayed if an error occurs */ }
-        )
-        Text(text = user.name)
-    }
 }

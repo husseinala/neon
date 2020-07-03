@@ -7,6 +7,12 @@ A small Jetpack Compose library that provides Compose support for different imag
 
 ####  Integrating with Glide:
 
+To add Glide support, import the Neon Glide library:
+
+```groovy
+implementation 'com.husseinala.neon:glide:0.1.1'
+```
+
 Provide a Glide `RequestManager` instance to your root Compose tree:
 
 ```kotlin
@@ -31,6 +37,12 @@ fun GlideApp(requestManager: RequestManager) {
 ```
 
 ####  Integrating with Picasso:
+
+To add Glide support, import the Neon Picasso library:
+
+```groovy
+implementation 'com.husseinala.neon:picasso:0.1.1'
+```
 
 Provide a `Picasso` instance to your root Compose tree:
 
@@ -79,7 +91,7 @@ fun UserListItem(user: User) {
 
 ## License
 
-    Copyright 2020 Hussein Ala Contributors
+    Copyright 2020 Hussein Aladeen Contributors
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
