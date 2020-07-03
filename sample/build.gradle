@@ -1,0 +1,69 @@
+import com.husseinala.neon.Versions
+import com.husseinala.neon.Deps
+
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'com.diffplug.gradle.spotless'
+}
+
+spotless {
+    kotlin {
+        target "**/*.kt"
+        ktlint(Versions.KT_LINT)
+    }
+}
+
+android {
+    compileSdkVersion Versions.COMPILE_SDK
+
+    defaultConfig {
+        applicationId "com.husseinala.neon.sample"
+        minSdkVersion Versions.MIN_SDK
+        targetSdkVersion Versions.TARGET_SDK
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildFeatures {
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerVersion Versions.KOTLIN_COMPILER
+        kotlinCompilerExtensionVersion Versions.COMPOSE
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+        freeCompilerArgs += "-XXLanguage:+NonParenthesizedAnnotationsOnFunctionalTypes"
+    }
+}
+
+dependencies {
+    implementation project(':picasso')
+
+    implementation Deps.Kotlin.STD_LIB
+    implementation Deps.AndroidX.CORE
+    implementation Deps.AndroidX.APPCOMPAT
+    implementation Deps.AndroidX.MATERIAL
+
+    implementation Deps.Compose.FOUNDATION
+    implementation Deps.Compose.LAYOUT
+    implementation Deps.Compose.MATERIAL
+
+    testImplementation Deps.Testing.JUNIT
+}

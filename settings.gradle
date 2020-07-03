@@ -1,0 +1,5 @@
+rootProject.name = "neon"
+include ':sample'
+include ':core'
+include ':glide'
+include ':picasso'
