@@ -9,6 +9,9 @@ import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.CenterInside
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
@@ -37,19 +40,19 @@ class GlideImageLoader(
             imageConfig.size
         }
 
-        val requestOptions = imageConfig.transformation.fold(RequestOptions()) { acc, value ->
+        val transformations = imageConfig.transformation.mapNotNull { value ->
             when (value) {
                 is ScaleTypeTransformation -> when (value.scaleType) {
-                    ScaleType.CENTER_CROP -> acc.centerCrop()
-                    ScaleType.CENTER_INSIDE -> acc.centerInside()
+                    ScaleType.CENTER_CROP -> CenterCrop()
+                    ScaleType.CENTER_INSIDE -> CenterInside()
                 }
-                is CircleCropTransformation -> acc.circleCrop()
-                is RoundedCornersTransformation -> acc.transform(
-                    RoundedCorners(value.radius)
-                )
-                else -> acc
+                is CircleCropTransformation -> CircleCrop()
+                is RoundedCornersTransformation -> RoundedCorners(value.radius)
+                else -> null
             }
-        }
+        }.toTypedArray()
+
+        val requestOptions = RequestOptions().transform(*transformations)
 
         val future = requestManager
             .asBitmap()

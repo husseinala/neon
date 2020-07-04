@@ -55,6 +55,7 @@ android {
 
 dependencies {
     implementation project(':picasso')
+    implementation project(':glide')
 
     implementation Deps.Kotlin.STD_LIB
     implementation Deps.AndroidX.CORE

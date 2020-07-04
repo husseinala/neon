@@ -38,7 +38,7 @@ fun GlideApp(requestManager: RequestManager) {
 
 ####  Integrating with Picasso:
 
-To add Glide support, import the Neon Picasso library:
+To add Picasso support, import the Neon Picasso library:
 
 ```groovy
 implementation 'com.husseinala.neon:picasso:0.1.1'

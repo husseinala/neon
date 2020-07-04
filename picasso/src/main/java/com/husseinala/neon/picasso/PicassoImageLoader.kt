@@ -37,12 +37,11 @@ class PicassoImageLoader(
             is ImageId.File -> picasso.load(id.value)
             is ImageId.Resource -> picasso.load(id.value)
         }.apply {
-
-            applyTransformations(imageConfig.transformation)
-
             if (imageConfig.size != IntSize.Zero) {
                 resize(imageConfig.size.width, imageConfig.size.height)
             }
+
+            applyTransformations(imageConfig.transformation)
         }.fetch(onSuccess = onSuccess, onFailure = onFailure)
 
         return Cancelable {

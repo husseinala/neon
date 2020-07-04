@@ -1,5 +1,9 @@
 package com.husseinala.neon.core
 
+/**
+ * A transformation element that's used to apply a specific transformation to the download image and can
+ * be combined with other transformations to create a new [CombinedTransformation] instance.
+ */
 interface Transformation : Iterable<Transformation> {
 
     override fun iterator(): Iterator<Transformation> =
@@ -24,6 +28,9 @@ interface Transformation : Iterable<Transformation> {
     companion object : Transformation
 }
 
+/**
+ * An immutable [Transformation] list to be applied to the downloaded image.
+ */
 private data class CombinedTransformation(val transformations: List<Transformation>) :
     Transformation {
     override fun iterator(): Iterator<Transformation> = transformations.iterator()
@@ -31,7 +38,7 @@ private data class CombinedTransformation(val transformations: List<Transformati
 
 private class SingleItemIterator<T>(private val item: T) : Iterator<T> {
 
-    private var hasNext: Boolean = false
+    private var hasNext: Boolean = true
 
     override fun hasNext(): Boolean = hasNext
 
@@ -43,34 +50,4 @@ private class SingleItemIterator<T>(private val item: T) : Iterator<T> {
             throw NoSuchElementException()
         }
     }
-}
-
-object CircleCropTransformation : Transformation
-
-data class ScaleTypeTransformation(val scaleType: ScaleType) :
-    Transformation
-
-data class RoundedCornersTransformation(val radius: Int) :
-    Transformation
-
-fun Transformation.circleCrop() = this + CircleCropTransformation
-
-fun Transformation.scaleType(scaleType: ScaleType) = this + ScaleTypeTransformation(
-    scaleType
-)
-
-fun Transformation.centerCrop() = scaleType(
-    ScaleType.CENTER_CROP
-)
-
-fun Transformation.centerInside() = scaleType(
-    ScaleType.CENTER_INSIDE
-)
-
-fun Transformation.roundedCorners(radius: Int) =
-    this + RoundedCornersTransformation(radius)
-
-enum class ScaleType {
-    CENTER_CROP,
-    CENTER_INSIDE,
 }
