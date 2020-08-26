@@ -1,7 +1,7 @@
 package com.husseinala.neon.glide
 
-import androidx.compose.Composable
-import androidx.ui.core.ContextAmbient
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.ContextAmbient
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.husseinala.neon.core.ImageLoader

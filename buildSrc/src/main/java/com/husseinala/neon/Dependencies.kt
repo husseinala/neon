@@ -8,14 +8,14 @@ object Versions {
     const val TARGET_SDK = 29
 
     // Kotlin
-    const val KOTLIN = "1.3.72"
+    const val KOTLIN = "1.4.0"
 
     // Compose
-    const val COMPOSE = "0.1.0-dev14"
-    const val KOTLIN_COMPILER = "1.3.70-dev-withExperimentalGoogleExtensions-20200424"
+    const val COMPOSE = "1.0.0-alpha01"
+    const val KOTLIN_COMPILER = "1.4.0"
 
     // Spotless
-    const val KT_LINT = "0.37.2"
+    const val KT_LINT = "0.38.1"
 }
 
 object Deps {
@@ -26,7 +26,7 @@ object Deps {
     }
 
     object Android {
-        const val GRADLE_PLUGIN = "com.android.tools.build:gradle:4.2.0-alpha03"
+        const val GRADLE_PLUGIN = "com.android.tools.build:gradle:4.2.0-alpha07"
     }
 
     object AndroidX {
@@ -36,9 +36,9 @@ object Deps {
     }
 
     object Compose {
-        const val FOUNDATION = "androidx.ui:ui-foundation:${Versions.COMPOSE}"
-        const val LAYOUT = "androidx.ui:ui-layout:${Versions.COMPOSE}"
-        const val MATERIAL = "androidx.ui:ui-material:${Versions.COMPOSE}"
+        const val FOUNDATION = "androidx.compose.foundation:foundation:${Versions.COMPOSE}"
+        const val LAYOUT = "androidx.compose.foundation:foundation-layout:${Versions.COMPOSE}"
+        const val MATERIAL = "androidx.compose.material:material:${Versions.COMPOSE}"
     }
 
     object Testing {

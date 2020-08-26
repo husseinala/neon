@@ -17,7 +17,7 @@ buildscript {
 }
 
 plugins {
-    id "com.diffplug.gradle.spotless" version "4.5.0"
+    id "com.diffplug.spotless" version "5.2.0"
 }
 
 allprojects {
@@ -28,6 +28,13 @@ allprojects {
 
     group = project.property("GROUP") as String
     version = project.property("VERSION_NAME") as String
+
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+        kotlinOptions {
+            jvmTarget = "1.8"
+            freeCompilerArgs += ["-Xallow-jvm-ir-dependencies", "-Xskip-prerelease-check"]
+        }
+    }
 }
 
 clean {

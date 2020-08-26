@@ -1,22 +1,22 @@
 package com.husseinala.neon.core
 
-import androidx.compose.Composable
-import androidx.compose.Providers
-import androidx.compose.getValue
-import androidx.compose.key
-import androidx.compose.onActive
-import androidx.compose.setValue
-import androidx.compose.state
-import androidx.compose.staticAmbientOf
-import androidx.ui.core.Alignment
-import androidx.ui.core.ContentScale
-import androidx.ui.core.Modifier
-import androidx.ui.core.onPositioned
-import androidx.ui.foundation.Box
-import androidx.ui.foundation.Image
-import androidx.ui.graphics.ImageAsset
-import androidx.ui.layout.fillMaxSize
-import androidx.ui.unit.IntSize
+import androidx.compose.foundation.Box
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Providers
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
+import androidx.compose.runtime.onActive
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.state
+import androidx.compose.runtime.staticAmbientOf
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ImageAsset
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.onPositioned
+import androidx.compose.ui.unit.IntSize
 
 /**
  * Provides an [ImageLoader] that can be used by the [Neon] and [LoadImage] composables to fetch images.
@@ -53,7 +53,7 @@ fun Neon(
         )
     }
 ) {
-    var monetState by state<NeonState<ImageAsset>> { NeonState.Loading }
+    var neonState by state<NeonState<ImageAsset>> { NeonState.Loading }
     var componentSize by state { IntSize.Zero }
 
     if (componentSize != IntSize.Zero) {
@@ -64,18 +64,18 @@ fun Neon(
                 transformation = transformation
             ),
             onLoaded = {
-                monetState = NeonState.Success(it)
+                neonState = NeonState.Success(it)
             },
             onFailure = { NeonState.Error(it) }
         )
     }
 
     Box(
-        modifier = modifier + Modifier.onPositioned {
+        modifier = modifier then Modifier.onPositioned {
             if (componentSize != it.size) componentSize = it.size
         }
     ) {
-        monetState.run {
+        neonState.run {
             when (this) {
                 is NeonState.Loading -> onLoading()
                 is NeonState.Error -> onError(error)

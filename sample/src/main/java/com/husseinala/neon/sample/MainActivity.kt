@@ -2,22 +2,21 @@ package com.husseinala.neon.sample
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.Composable
-import androidx.compose.emptyContent
-import androidx.ui.core.Alignment
-import androidx.ui.core.Modifier
-import androidx.ui.core.setContent
-import androidx.ui.foundation.Box
-import androidx.ui.foundation.Text
-import androidx.ui.foundation.lazy.LazyColumnItems
-import androidx.ui.layout.aspectRatio
-import androidx.ui.layout.fillMaxSize
-import androidx.ui.layout.fillMaxWidth
-import androidx.ui.layout.padding
-import androidx.ui.material.CircularProgressIndicator
-import androidx.ui.material.Scaffold
-import androidx.ui.material.TopAppBar
-import androidx.ui.unit.dp
+import androidx.compose.foundation.Box
+import androidx.compose.foundation.Text
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumnFor
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Scaffold
+import androidx.compose.material.TopAppBar
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.emptyContent
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.setContent
+import androidx.compose.ui.unit.dp
 import com.bumptech.glide.RequestManager
 import com.husseinala.neon.core.Neon
 import com.husseinala.neon.core.Transformation
@@ -56,11 +55,11 @@ fun SampleScreen(title: String) {
     Scaffold(
         topBar = { TopAppBar(title = { Text(text = title) }) }
     ) {
-        LazyColumnItems(items = Samples.images) { url ->
+        LazyColumnFor(items = Samples.images) { url ->
             Neon(
                 url = url,
                 transformation = Transformation.centerCrop().roundedCorners(radius = 16.dp),
-                modifier = Modifier.fillMaxWidth().aspectRatio(1.7f)
+                modifier = Modifier.fillParentMaxWidth().aspectRatio(1.7f)
                     .padding(horizontal = 16.dp, vertical = 8.dp),
                 onLoading = { Center { CircularProgressIndicator() } }
             )

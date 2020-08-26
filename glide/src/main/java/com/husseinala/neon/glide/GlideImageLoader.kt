@@ -2,9 +2,9 @@ package com.husseinala.neon.glide
 
 import android.os.Handler
 import android.os.Looper
-import androidx.ui.graphics.ImageAsset
-import androidx.ui.graphics.asImageAsset
-import androidx.ui.unit.IntSize
+import androidx.compose.ui.graphics.ImageAsset
+import androidx.compose.ui.graphics.asImageAsset
+import androidx.compose.ui.unit.IntSize
 import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.load.DataSource
@@ -73,33 +73,35 @@ class GlideImageLoader(
 private inline fun <T> RequestBuilder<T>.listener(
     crossinline onSuccess: (T) -> Unit,
     crossinline onFailure: (Exception) -> Unit = { }
-): RequestBuilder<T> = listener(object : RequestListener<T> {
-    override fun onLoadFailed(
-        e: GlideException?,
-        model: Any,
-        target: com.bumptech.glide.request.target.Target<T>,
-        isFirstResource: Boolean
-    ): Boolean {
-        runOnUiThread {
-            onFailure(e ?: Exception("Unknown Exception"))
-        }
-        return true
-    }
-
-    override fun onResourceReady(
-        resource: T,
-        model: Any,
-        target: GlideTarget<T>,
-        dataSource: DataSource,
-        isFirstResource: Boolean
-    ): Boolean {
-        runOnUiThread {
-            onSuccess(resource)
+): RequestBuilder<T> = listener(
+    object : RequestListener<T> {
+        override fun onLoadFailed(
+            e: GlideException?,
+            model: Any,
+            target: com.bumptech.glide.request.target.Target<T>,
+            isFirstResource: Boolean
+        ): Boolean {
+            runOnUiThread {
+                onFailure(e ?: Exception("Unknown Exception"))
+            }
+            return true
         }
 
-        return true
+        override fun onResourceReady(
+            resource: T,
+            model: Any,
+            target: GlideTarget<T>,
+            dataSource: DataSource,
+            isFirstResource: Boolean
+        ): Boolean {
+            runOnUiThread {
+                onSuccess(resource)
+            }
+
+            return true
+        }
     }
-})
+)
 
 private fun runOnUiThread(action: () -> Unit) {
     Handler(Looper.getMainLooper()).post { action() }

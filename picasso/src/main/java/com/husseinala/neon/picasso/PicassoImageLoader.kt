@@ -2,9 +2,9 @@ package com.husseinala.neon.picasso
 
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
-import androidx.ui.graphics.ImageAsset
-import androidx.ui.graphics.asImageAsset
-import androidx.ui.unit.IntSize
+import androidx.compose.ui.graphics.ImageAsset
+import androidx.compose.ui.graphics.asImageAsset
+import androidx.compose.ui.unit.IntSize
 import com.husseinala.neon.core.Cancelable
 import com.husseinala.neon.core.CircleCropTransformation
 import com.husseinala.neon.core.ImageConfig

@@ -1,8 +1,8 @@
 package com.husseinala.neon.core
 
-import androidx.compose.Composable
-import androidx.ui.core.DensityAmbient
-import androidx.ui.unit.Dp
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.DensityAmbient
+import androidx.compose.ui.unit.Dp
 import kotlin.math.roundToInt
 
 enum class ScaleType {

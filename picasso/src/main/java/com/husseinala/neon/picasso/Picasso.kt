@@ -1,7 +1,7 @@
 package com.husseinala.neon.picasso
 
-import androidx.compose.Composable
-import androidx.ui.core.ContextAmbient
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.ContextAmbient
 import com.husseinala.neon.core.ImageLoader
 import com.husseinala.neon.core.LoadImage
 import com.husseinala.neon.core.Neon

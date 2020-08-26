@@ -4,7 +4,7 @@ import com.husseinala.neon.Deps
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
-    id 'com.diffplug.gradle.spotless'
+    id 'com.diffplug.spotless'
     id 'com.vanniktech.maven.publish'
 }
 
@@ -44,11 +44,6 @@ android {
     composeOptions {
         kotlinCompilerVersion Versions.KOTLIN_COMPILER
         kotlinCompilerExtensionVersion Versions.COMPOSE
-    }
-
-    kotlinOptions {
-        jvmTarget = '1.8'
-        freeCompilerArgs += "-XXLanguage:+NonParenthesizedAnnotationsOnFunctionalTypes"
     }
 }
 

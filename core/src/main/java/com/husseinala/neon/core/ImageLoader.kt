@@ -2,8 +2,8 @@
 
 package com.husseinala.neon.core
 
-import androidx.ui.graphics.ImageAsset
-import androidx.ui.unit.IntSize
+import androidx.compose.ui.graphics.ImageAsset
+import androidx.compose.ui.unit.IntSize
 
 /**
  * An image loader that can be used to fetch an image from a remote or local source.
@@ -77,20 +77,10 @@ sealed class ImageId<T> {
 /**
  * An interface that's used to indicate a cancelable request.
  */
-interface Cancelable {
+fun interface Cancelable {
 
     /**
      * Attempts to cancel execution of the current request.
      */
     fun cancel()
-}
-
-/**
- * Convenience method for creating a new [Cancelable] instance.
- */
-fun Cancelable(action: () -> Unit = {}) = object :
-    Cancelable {
-    override fun cancel() {
-        action()
-    }
 }
