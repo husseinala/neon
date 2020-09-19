@@ -10,7 +10,7 @@ A small Jetpack Compose library that provides Compose support for different imag
 To add Glide support, import the Neon Glide library:
 
 ```groovy
-implementation 'com.husseinala.neon:glide:0.1.3'
+implementation 'com.husseinala.neon:glide:0.1.4'
 ```
 
 Provide a Glide `RequestManager` instance to your root Compose tree:
@@ -41,7 +41,7 @@ fun GlideApp(requestManager: RequestManager) {
 To add Picasso support, import the Neon Picasso library:
 
 ```groovy
-implementation 'com.husseinala.neon:picasso:0.1.3'
+implementation 'com.husseinala.neon:picasso:0.1.4'
 ```
 
 Provide a `Picasso` instance to your root Compose tree:
