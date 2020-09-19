@@ -1,5 +1,3 @@
-@file:Suppress("functionName")
-
 package com.husseinala.neon.core
 
 import androidx.compose.ui.graphics.ImageAsset

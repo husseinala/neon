@@ -7,9 +7,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Providers
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.onActive
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.state
 import androidx.compose.runtime.staticAmbientOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -53,8 +54,8 @@ fun Neon(
         )
     }
 ) {
-    var neonState by state<NeonState<ImageAsset>> { NeonState.Loading }
-    var componentSize by state { IntSize.Zero }
+    var neonState by remember { mutableStateOf<NeonState<ImageAsset>>(NeonState.Loading) }
+    var componentSize by remember { mutableStateOf(IntSize.Zero) }
 
     if (componentSize != IntSize.Zero) {
         LoadImage(
