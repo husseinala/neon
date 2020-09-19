@@ -1,4 +1,4 @@
-# Compose Neon
+# Compose Neon ![Latest Version](https://img.shields.io/nexus/r/com.husseinala.neon/core?server=https%3A%2F%2Foss.sonatype.org)
 
 A small Jetpack Compose library that provides Compose support for different image loading libraries.
 
