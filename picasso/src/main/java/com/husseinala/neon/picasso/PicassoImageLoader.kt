@@ -2,7 +2,7 @@ package com.husseinala.neon.picasso
 
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
-import androidx.compose.ui.graphics.ImageAsset
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageAsset
 import androidx.compose.ui.unit.IntSize
 import com.husseinala.neon.core.Cancelable
@@ -26,7 +26,7 @@ class PicassoImageLoader(
 
     override fun getImage(
         imageConfig: ImageConfig<*>,
-        onSuccess: (ImageAsset) -> Unit,
+        onSuccess: (ImageBitmap) -> Unit,
         onFailure: (Exception) -> Unit
     ): Cancelable {
         val id = imageConfig.id
@@ -71,7 +71,7 @@ private fun RequestCreator.applyTransformations(transformations: Transformation)
 }
 
 private fun RequestCreator.fetch(
-    onSuccess: (ImageAsset) -> Unit,
+    onSuccess: (ImageBitmap) -> Unit,
     onFailure: (Exception) -> Unit
 ): Target {
     val target = object : Target {

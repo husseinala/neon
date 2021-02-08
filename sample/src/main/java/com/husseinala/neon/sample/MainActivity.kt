@@ -2,14 +2,14 @@ package com.husseinala.neon.sample
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.Box
-import androidx.compose.foundation.Text
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.emptyContent
@@ -69,5 +69,9 @@ fun SampleScreen(title: String) {
 
 @Composable
 fun Center(children: @Composable () -> Unit = emptyContent()) {
-    Box(modifier = Modifier.fillMaxSize(), gravity = Alignment.Center, children = children)
+    Box(modifier = Modifier.fillMaxSize())  {
+        Box(modifier = Modifier.align(Alignment.Center)) {
+            children()
+        }
+    }
 }

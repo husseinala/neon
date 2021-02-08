@@ -1,6 +1,6 @@
 package com.husseinala.neon.core
 
-import androidx.compose.ui.graphics.ImageAsset
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.unit.IntSize
 
 /**
@@ -17,7 +17,7 @@ interface ImageLoader {
      */
     fun getImage(
         imageConfig: ImageConfig<*>,
-        onSuccess: (ImageAsset) -> Unit,
+        onSuccess: (ImageBitmap) -> Unit,
         onFailure: (Exception) -> Unit
     ): Cancelable
 }

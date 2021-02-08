@@ -2,7 +2,7 @@ package com.husseinala.neon.glide
 
 import android.os.Handler
 import android.os.Looper
-import androidx.compose.ui.graphics.ImageAsset
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageAsset
 import androidx.compose.ui.unit.IntSize
 import com.bumptech.glide.RequestBuilder
@@ -31,7 +31,7 @@ class GlideImageLoader(
 
     override fun getImage(
         imageConfig: ImageConfig<*>,
-        onSuccess: (ImageAsset) -> Unit,
+        onSuccess: (ImageBitmap) -> Unit,
         onFailure: (Exception) -> Unit
     ): Cancelable {
         val size = if (imageConfig.size == IntSize.Zero) {

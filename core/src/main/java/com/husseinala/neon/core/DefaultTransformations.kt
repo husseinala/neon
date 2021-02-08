@@ -1,7 +1,7 @@
 package com.husseinala.neon.core
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.DensityAmbient
+import androidx.compose.ui.platform.AmbientDensity
 import androidx.compose.ui.unit.Dp
 import kotlin.math.roundToInt
 
@@ -11,7 +11,7 @@ enum class ScaleType {
 }
 
 /**
- * Transformation that cricle crop the downloaded image.
+ * Transformation that circle crop the downloaded image.
  */
 @Composable
 fun Transformation.circleCrop() = this + CircleCropTransformation
@@ -48,7 +48,7 @@ fun Transformation.roundedCorners(radius: Dp) =
     this + RoundedCornersTransformation(radius.toPx().roundToInt())
 
 @Composable
-private fun Dp.toPx() = DensityAmbient.current.density * value
+private fun Dp.toPx() = AmbientDensity.current.density * value
 
 object CircleCropTransformation : Transformation
 
