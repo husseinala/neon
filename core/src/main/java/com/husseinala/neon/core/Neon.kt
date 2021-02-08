@@ -1,28 +1,38 @@
 package com.husseinala.neon.core
 
-import androidx.compose.foundation.Box
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Providers
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.onActive
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticAmbientOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ImageAsset
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.onPositioned
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.unit.IntSize
 
 /**
  * Provides an [ImageLoader] that can be used by the [Neon] and [LoadImage] composables to fetch images.
  */
-val ImageLoaderAmbient = staticAmbientOf<ImageLoader>()
+val AmbientImageLoader = staticAmbientOf<ImageLoader>()
+
+@Suppress("AmbientNaming")
+@Deprecated(
+    "Renamed to AmbientImageLoader",
+    replaceWith = ReplaceWith(
+        "AmbientImageLoader",
+        "com.husseinala.neon.core.AmbientImageLoader"
+    )
+)
+val ImageLoaderAmbient
+    get() = AmbientImageLoader
 
 /**
  * A composable that downloads and display an image using the specified [url]. This will attempt
@@ -41,20 +51,22 @@ val ImageLoaderAmbient = staticAmbientOf<ImageLoader>()
 @Composable
 fun Neon(
     url: String,
-    modifier: Modifier = Modifier.fillMaxSize(),
+    modifier: Modifier = Modifier,
     transformation: Transformation = Transformation.centerInside(),
+    contentDescription: String? = null,
     onLoading: @Composable () -> Unit = { },
     onError: @Composable (Throwable) -> Unit = { },
-    onSuccess: @Composable (ImageAsset) -> Unit = {
+    onSuccess: @Composable (ImageBitmap) -> Unit = {
         Image(
-            asset = it,
+            bitmap = it,
+            contentDescription = contentDescription,
             contentScale = ContentScale.Inside,
             alignment = Alignment.Center,
             modifier = Modifier.fillMaxSize()
         )
     }
 ) {
-    var neonState by remember { mutableStateOf<NeonState<ImageAsset>>(NeonState.Loading) }
+    var neonState by remember { mutableStateOf<NeonState<ImageBitmap>>(NeonState.Loading) }
     var componentSize by remember { mutableStateOf(IntSize.Zero) }
 
     if (componentSize != IntSize.Zero) {
@@ -72,8 +84,8 @@ fun Neon(
     }
 
     Box(
-        modifier = modifier then Modifier.onPositioned {
-            if (componentSize != it.size) componentSize = it.size
+        modifier = modifier then Modifier.onSizeChanged { size ->
+            if (componentSize != size) componentSize = size
         }
     ) {
         neonState.run {
@@ -88,7 +100,7 @@ fun Neon(
 
 /**
  * A composable that downloads an image with the specified [ImageConfig] using the [ImageLoader]
- * provided by the [ImageLoaderAmbient].
+ * provided by the [AmbientImageLoader].
  *
  * @param onLoaded Callback invoked when an image has been successfully downloaded.
  * @param onFailure Callback invoked when an error occurs while downloading the specified image.
@@ -96,22 +108,20 @@ fun Neon(
 @Composable
 fun LoadImage(
     imageConfig: ImageConfig<*>,
-    onLoaded: (ImageAsset) -> Unit,
+    onLoaded: (ImageBitmap) -> Unit,
     onFailure: (Throwable) -> Unit
 ) {
-    key(imageConfig) {
-        val imageLoader = ImageLoaderAmbient.current
+    val imageLoader = AmbientImageLoader.current
 
-        onActive {
-            val cancelable = imageLoader.getImage(
-                imageConfig,
-                onSuccess = onLoaded,
-                onFailure = onFailure
-            )
+    DisposableEffect(imageConfig, effect = {
+        val cancelable = imageLoader.getImage(
+            imageConfig,
+            onSuccess = onLoaded,
+            onFailure = onFailure
+        )
 
-            onDispose { cancelable.cancel() }
-        }
-    }
+        onDispose { cancelable.cancel() }
+    })
 }
 
 /**
@@ -121,5 +131,5 @@ fun LoadImage(
  */
 @Composable
 fun ProvideImageLoader(imageLoader: ImageLoader, children: @Composable () -> Unit) {
-    Providers(ImageLoaderAmbient provides imageLoader, children = children)
+    Providers(AmbientImageLoader provides imageLoader, content = children)
 }
