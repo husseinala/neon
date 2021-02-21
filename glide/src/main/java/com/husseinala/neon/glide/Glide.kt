@@ -1,7 +1,7 @@
 package com.husseinala.neon.glide
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.AmbientContext
+import androidx.compose.ui.platform.LocalContext
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.husseinala.neon.core.ImageLoader
@@ -10,7 +10,7 @@ import com.husseinala.neon.core.Neon
 import com.husseinala.neon.core.ProvideImageLoader
 
 @Composable
-private fun context() = AmbientContext.current
+private fun context() = LocalContext.current
 
 /**
  * This composable is used to set the current value of the [ImageLoader] ambient to a

@@ -1,7 +1,7 @@
 package com.husseinala.neon.core
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.AmbientDensity
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import kotlin.math.roundToInt
 
@@ -48,7 +48,7 @@ fun Transformation.roundedCorners(radius: Dp) =
     this + RoundedCornersTransformation(radius.toPx().roundToInt())
 
 @Composable
-private fun Dp.toPx() = AmbientDensity.current.density * value
+private fun Dp.toPx() = LocalDensity.current.density * value
 
 object CircleCropTransformation : Transformation
 

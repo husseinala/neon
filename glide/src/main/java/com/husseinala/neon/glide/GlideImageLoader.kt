@@ -3,7 +3,7 @@ package com.husseinala.neon.glide
 import android.os.Handler
 import android.os.Looper
 import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.asImageAsset
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.unit.IntSize
 import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.RequestManager
@@ -59,7 +59,7 @@ class GlideImageLoader(
             .load(imageConfig.id.value)
             .apply(requestOptions)
             .listener(
-                onSuccess = { onSuccess(it.asImageAsset()) },
+                onSuccess = { onSuccess(it.asImageBitmap()) },
                 onFailure = onFailure
             )
             .submit(size.width, size.height)

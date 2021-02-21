@@ -1,21 +1,21 @@
 package com.husseinala.neon.sample
 
 import android.os.Bundle
+import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumnFor
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.emptyContent
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.setContent
 import androidx.compose.ui.unit.dp
 import com.bumptech.glide.RequestManager
 import com.husseinala.neon.core.Neon
@@ -55,21 +55,25 @@ fun SampleScreen(title: String) {
     Scaffold(
         topBar = { TopAppBar(title = { Text(text = title) }) }
     ) {
-        LazyColumnFor(items = Samples.images) { url ->
-            Neon(
-                url = url,
-                transformation = Transformation.centerCrop().roundedCorners(radius = 16.dp),
-                modifier = Modifier.fillParentMaxWidth().aspectRatio(1.7f)
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
-                onLoading = { Center { CircularProgressIndicator() } }
-            )
+        LazyColumn {
+            items(Samples.images) { url ->
+                Neon(
+                    url = url,
+                    transformation = Transformation.centerCrop().roundedCorners(radius = 16.dp),
+                    modifier = Modifier
+                        .fillParentMaxWidth()
+                        .aspectRatio(1.7f)
+                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                    onLoading = { Center { CircularProgressIndicator() } }
+                )
+            }
         }
     }
 }
 
 @Composable
-fun Center(children: @Composable () -> Unit = emptyContent()) {
-    Box(modifier = Modifier.fillMaxSize())  {
+fun Center(children: @Composable () -> Unit = { }) {
+    Box(modifier = Modifier.fillMaxSize()) {
         Box(modifier = Modifier.align(Alignment.Center)) {
             children()
         }

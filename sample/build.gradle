@@ -53,7 +53,7 @@ dependencies {
 
     implementation Deps.Kotlin.STD_LIB
     implementation Deps.AndroidX.CORE
-    implementation Deps.AndroidX.APPCOMPAT
+    implementation Deps.AndroidX.ACTIVITY_COMPOSE
     implementation Deps.AndroidX.MATERIAL
 
     implementation Deps.Compose.FOUNDATION

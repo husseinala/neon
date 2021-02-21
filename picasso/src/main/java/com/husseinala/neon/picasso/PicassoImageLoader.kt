@@ -3,7 +3,7 @@ package com.husseinala.neon.picasso
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.asImageAsset
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.unit.IntSize
 import com.husseinala.neon.core.Cancelable
 import com.husseinala.neon.core.CircleCropTransformation
@@ -84,7 +84,7 @@ private fun RequestCreator.fetch(
         }
 
         override fun onBitmapLoaded(bitmap: Bitmap, from: Picasso.LoadedFrom?) {
-            onSuccess(bitmap.asImageAsset())
+            onSuccess(bitmap.asImageBitmap())
         }
     }
 
