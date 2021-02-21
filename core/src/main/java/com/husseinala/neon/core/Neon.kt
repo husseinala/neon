@@ -66,6 +66,41 @@ fun Neon(
         )
     }
 ) {
+    Neon(
+        url = url,
+        modifier = modifier,
+        transformation = transformation,
+        content = { neonState ->
+            neonState.run {
+                when (this) {
+                    is NeonState.Loading -> onLoading()
+                    is NeonState.Error -> onError(error)
+                    is NeonState.Success -> onSuccess(result)
+                }
+            }
+        }
+    )
+}
+
+/**
+ * A composable that downloads and display an image using the specified [url]. This will attempt
+ * to fill the container view width and height. However, an optional [Modifier] parameter can be
+ * specified to adjust sizing or draw additional content.
+ *
+ * @param url The url of the image to be downloaded.
+ * @param modifier Modifier used to adjust the layout algorithm or draw decoration content (ex.
+ * background). This defaults to using the [centerInside] transformation.
+ * @param transformation Used to specify any needed transformation to the downloaded image
+ * (ex. [centerCrop], [roundedCorners]).
+ * @param content the content to be displayed.
+ */
+@Composable
+fun Neon(
+    url: String,
+    modifier: Modifier = Modifier,
+    transformation: Transformation = Transformation.centerInside(),
+    content: @Composable (state: NeonState<ImageBitmap>) -> Unit
+) {
     var neonState by remember { mutableStateOf<NeonState<ImageBitmap>>(NeonState.Loading) }
     var componentSize by remember { mutableStateOf(IntSize.Zero) }
 
@@ -88,13 +123,7 @@ fun Neon(
             if (componentSize != size) componentSize = size
         }
     ) {
-        neonState.run {
-            when (this) {
-                is NeonState.Loading -> onLoading()
-                is NeonState.Error -> onError(error)
-                is NeonState.Success -> onSuccess(result)
-            }
-        }
+        content(neonState)
     }
 }
 
@@ -113,15 +142,18 @@ fun LoadImage(
 ) {
     val imageLoader = AmbientImageLoader.current
 
-    DisposableEffect(imageConfig, effect = {
-        val cancelable = imageLoader.getImage(
-            imageConfig,
-            onSuccess = onLoaded,
-            onFailure = onFailure
-        )
+    DisposableEffect(
+        imageConfig,
+        effect = {
+            val cancelable = imageLoader.getImage(
+                imageConfig,
+                onSuccess = onLoaded,
+                onFailure = onFailure
+            )
 
-        onDispose { cancelable.cancel() }
-    })
+            onDispose { cancelable.cancel() }
+        }
+    )
 }
 
 /**
