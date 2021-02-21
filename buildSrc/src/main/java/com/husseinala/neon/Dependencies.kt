@@ -8,11 +8,11 @@ object Versions {
     const val TARGET_SDK = 29
 
     // Kotlin
-    const val KOTLIN = "1.4.21-2"
+    const val KOTLIN = "1.4.30"
     const val DOKKA = "1.4.0"
 
     // Compose
-    const val COMPOSE = "1.0.0-alpha11"
+    const val COMPOSE = "1.0.0-alpha12"
 
     // Spotless
     const val KT_LINT = "0.40.0"
@@ -27,13 +27,13 @@ object Deps {
     }
 
     object Android {
-        const val GRADLE_PLUGIN = "com.android.tools.build:gradle:7.0.0-alpha05"
+        const val GRADLE_PLUGIN = "com.android.tools.build:gradle:7.0.0-alpha07"
     }
 
     object AndroidX {
         const val CORE = "androidx.core:core-ktx:1.3.2"
-        const val APPCOMPAT = "androidx.appcompat:appcompat:1.2.0"
         const val MATERIAL = "com.google.android.material:material:1.3.0"
+        const val ACTIVITY_COMPOSE = "androidx.activity:activity-compose:1.3.0-alpha02"
     }
 
     object Compose {

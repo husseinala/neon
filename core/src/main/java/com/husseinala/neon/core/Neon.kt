@@ -10,7 +10,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.staticAmbientOf
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
@@ -21,18 +21,16 @@ import androidx.compose.ui.unit.IntSize
 /**
  * Provides an [ImageLoader] that can be used by the [Neon] and [LoadImage] composables to fetch images.
  */
-val AmbientImageLoader = staticAmbientOf<ImageLoader>()
+val LocalImageLoader = staticCompositionLocalOf<ImageLoader>()
 
-@Suppress("AmbientNaming")
 @Deprecated(
-    "Renamed to AmbientImageLoader",
+    "Renamed to LocalImageLoader",
     replaceWith = ReplaceWith(
-        "AmbientImageLoader",
-        "com.husseinala.neon.core.AmbientImageLoader"
+        "LocalImageLoader",
+        "com.husseinala.neon.core.LocalImageLoader"
     )
 )
-val ImageLoaderAmbient
-    get() = AmbientImageLoader
+val AmbientImageLoader get() = LocalImageLoader
 
 /**
  * A composable that downloads and display an image using the specified [url]. This will attempt
@@ -129,7 +127,7 @@ fun Neon(
 
 /**
  * A composable that downloads an image with the specified [ImageConfig] using the [ImageLoader]
- * provided by the [AmbientImageLoader].
+ * provided by the [LocalImageLoader].
  *
  * @param onLoaded Callback invoked when an image has been successfully downloaded.
  * @param onFailure Callback invoked when an error occurs while downloading the specified image.
@@ -140,7 +138,7 @@ fun LoadImage(
     onLoaded: (ImageBitmap) -> Unit,
     onFailure: (Throwable) -> Unit
 ) {
-    val imageLoader = AmbientImageLoader.current
+    val imageLoader = LocalImageLoader.current
 
     DisposableEffect(
         imageConfig,
@@ -163,5 +161,5 @@ fun LoadImage(
  */
 @Composable
 fun ProvideImageLoader(imageLoader: ImageLoader, children: @Composable () -> Unit) {
-    Providers(AmbientImageLoader provides imageLoader, content = children)
+    Providers(LocalImageLoader provides imageLoader, content = children)
 }
