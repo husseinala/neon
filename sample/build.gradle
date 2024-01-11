@@ -18,7 +18,7 @@ android {
     compileSdkVersion Versions.COMPILE_SDK
 
     defaultConfig {
-        applicationId "com.husseinala.neon.sample"
+        namespace "com.husseinala.neon.sample"
         minSdkVersion Versions.MIN_SDK
         targetSdkVersion Versions.TARGET_SDK
         versionCode 1

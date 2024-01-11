@@ -16,9 +16,10 @@ spotless {
 }
 
 android {
-    compileSdkVersion Versions.COMPILE_SDK
+    namespace "com.husseinala.neon.core"
 
     defaultConfig {
+        compileSdkVersion Versions.COMPILE_SDK
         minSdkVersion Versions.MIN_SDK
         targetSdkVersion Versions.TARGET_SDK
 
@@ -43,7 +44,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion Versions.COMPOSE
+        kotlinCompilerExtensionVersion Versions.COMPOSE_COMPILER
     }
 }
 

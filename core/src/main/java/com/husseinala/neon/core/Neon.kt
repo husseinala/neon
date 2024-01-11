@@ -4,8 +4,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.Providers
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -21,16 +21,10 @@ import androidx.compose.ui.unit.IntSize
 /**
  * Provides an [ImageLoader] that can be used by the [Neon] and [LoadImage] composables to fetch images.
  */
-val LocalImageLoader = staticCompositionLocalOf<ImageLoader>()
-
-@Deprecated(
-    "Renamed to LocalImageLoader",
-    replaceWith = ReplaceWith(
-        "LocalImageLoader",
-        "com.husseinala.neon.core.LocalImageLoader"
-    )
-)
-val AmbientImageLoader get() = LocalImageLoader
+val LocalImageLoader =
+    staticCompositionLocalOf<ImageLoader> {
+        error("CompositionLocal ImageLoader not present")
+    }
 
 /**
  * A composable that downloads and display an image using the specified [url]. This will attempt
@@ -60,9 +54,9 @@ fun Neon(
             contentDescription = contentDescription,
             contentScale = ContentScale.Inside,
             alignment = Alignment.Center,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
         )
-    }
+    },
 ) {
     Neon(
         url = url,
@@ -76,7 +70,7 @@ fun Neon(
                     is NeonState.Success -> onSuccess(result)
                 }
             }
-        }
+        },
     )
 }
 
@@ -97,29 +91,32 @@ fun Neon(
     url: String,
     modifier: Modifier = Modifier,
     transformation: Transformation = Transformation.centerInside(),
-    content: @Composable (state: NeonState<ImageBitmap>) -> Unit
+    content: @Composable (state: NeonState<ImageBitmap>) -> Unit,
 ) {
     var neonState by remember { mutableStateOf<NeonState<ImageBitmap>>(NeonState.Loading) }
     var componentSize by remember { mutableStateOf(IntSize.Zero) }
 
     if (componentSize != IntSize.Zero) {
         LoadImage(
-            imageConfig = ImageConfig(
-                id = ImageId.Path(url),
-                size = componentSize,
-                transformation = transformation
-            ),
+            imageConfig =
+                ImageConfig(
+                    id = ImageId.Path(url),
+                    size = componentSize,
+                    transformation = transformation,
+                ),
             onLoaded = {
                 neonState = NeonState.Success(it)
             },
-            onFailure = { NeonState.Error(it) }
+            onFailure = { NeonState.Error(it) },
         )
     }
 
     Box(
-        modifier = modifier then Modifier.onSizeChanged { size ->
-            if (componentSize != size) componentSize = size
-        }
+        modifier =
+            modifier then
+                Modifier.onSizeChanged { size ->
+                    if (componentSize != size) componentSize = size
+                },
     ) {
         content(neonState)
     }
@@ -136,21 +133,22 @@ fun Neon(
 fun LoadImage(
     imageConfig: ImageConfig<*>,
     onLoaded: (ImageBitmap) -> Unit,
-    onFailure: (Throwable) -> Unit
+    onFailure: (Throwable) -> Unit,
 ) {
     val imageLoader = LocalImageLoader.current
 
     DisposableEffect(
         imageConfig,
         effect = {
-            val cancelable = imageLoader.getImage(
-                imageConfig,
-                onSuccess = onLoaded,
-                onFailure = onFailure
-            )
+            val cancelable =
+                imageLoader.getImage(
+                    imageConfig,
+                    onSuccess = onLoaded,
+                    onFailure = onFailure,
+                )
 
             onDispose { cancelable.cancel() }
-        }
+        },
     )
 }
 
@@ -160,6 +158,9 @@ fun LoadImage(
  * to fetch the images.
  */
 @Composable
-fun ProvideImageLoader(imageLoader: ImageLoader, children: @Composable () -> Unit) {
-    Providers(LocalImageLoader provides imageLoader, content = children)
+fun ProvideImageLoader(
+    imageLoader: ImageLoader,
+    children: @Composable () -> Unit,
+) {
+    CompositionLocalProvider(LocalImageLoader provides imageLoader, content = children)
 }

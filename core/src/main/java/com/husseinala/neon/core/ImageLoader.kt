@@ -7,7 +7,6 @@ import androidx.compose.ui.unit.IntSize
  * An image loader that can be used to fetch an image from a remote or local source.
  */
 interface ImageLoader {
-
     /**
      * Fetch an image using the specified [ImageConfig].
      *
@@ -18,7 +17,7 @@ interface ImageLoader {
     fun getImage(
         imageConfig: ImageConfig<*>,
         onSuccess: (ImageBitmap) -> Unit,
-        onFailure: (Exception) -> Unit
+        onFailure: (Exception) -> Unit,
     ): Cancelable
 }
 
@@ -33,14 +32,13 @@ interface ImageLoader {
 data class ImageConfig<T>(
     val id: ImageId<T>,
     val size: IntSize = IntSize.Zero,
-    val transformation: Transformation = Transformation
+    val transformation: Transformation = Transformation,
 )
 
 /**
  * Used to specify the location of the image to be fetched.
  */
 sealed class ImageId<T> {
-
     abstract val value: T
 
     /**
@@ -76,7 +74,6 @@ sealed class ImageId<T> {
  * An interface that's used to indicate a cancelable request.
  */
 fun interface Cancelable {
-
     /**
      * Attempts to cancel execution of the current request.
      */
