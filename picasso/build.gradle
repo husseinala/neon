@@ -16,6 +16,7 @@ spotless {
 }
 
 android {
+    namespace "com.husseinala.neon.picasso"
     compileSdkVersion Versions.COMPILE_SDK
 
     defaultConfig {

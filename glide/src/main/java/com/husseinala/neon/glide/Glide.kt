@@ -24,12 +24,13 @@ private fun context() = LocalContext.current
 @Composable
 fun ProvideGlideLoader(
     requestManager: RequestManager = Glide.with(context()),
-    children: @Composable () -> Unit
+    children: @Composable () -> Unit,
 ) {
     ProvideImageLoader(
-        imageLoader = GlideImageLoader(
-            requestManager
-        ),
-        children = children
+        imageLoader =
+            GlideImageLoader(
+                requestManager,
+            ),
+        children = children,
     )
 }

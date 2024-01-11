@@ -5,25 +5,27 @@ package com.husseinala.neon.core
  * be combined with other transformations to create a new [CombinedTransformation] instance.
  */
 interface Transformation : Iterable<Transformation> {
+    override fun iterator(): Iterator<Transformation> = SingleItemIterator(this)
 
-    override fun iterator(): Iterator<Transformation> =
-        SingleItemIterator(this)
-
-    operator fun plus(other: Transformation): Transformation = when {
-        other === this -> this
-        this is CombinedTransformation -> when (other) {
-            is CombinedTransformation -> CombinedTransformation(
-                transformations + other.transformations
-            )
-            else -> copy(transformations + other)
+    operator fun plus(other: Transformation): Transformation =
+        when {
+            other === this -> this
+            this is CombinedTransformation ->
+                when (other) {
+                    is CombinedTransformation ->
+                        CombinedTransformation(
+                            transformations + other.transformations,
+                        )
+                    else -> copy(transformations + other)
+                }
+            else ->
+                CombinedTransformation(
+                    listOf(
+                        this,
+                        other,
+                    ),
+                )
         }
-        else -> CombinedTransformation(
-            listOf(
-                this,
-                other
-            )
-        )
-    }
 
     companion object : Transformation
 }
@@ -37,7 +39,6 @@ private data class CombinedTransformation(val transformations: List<Transformati
 }
 
 private class SingleItemIterator<T>(private val item: T) : Iterator<T> {
-
     private var hasNext: Boolean = true
 
     override fun hasNext(): Boolean = hasNext

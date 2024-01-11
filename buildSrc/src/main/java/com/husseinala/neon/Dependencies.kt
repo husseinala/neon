@@ -3,19 +3,20 @@ package com.husseinala.neon
 object Versions {
 
     // android
-    const val COMPILE_SDK = 29
+    const val COMPILE_SDK = 34
     const val MIN_SDK = 21
-    const val TARGET_SDK = 29
+    const val TARGET_SDK = 34
 
     // Kotlin
-    const val KOTLIN = "1.4.30"
-    const val DOKKA = "1.4.0"
+    const val KOTLIN = "1.9.20"
+    const val DOKKA = "1.9.10"
 
     // Compose
-    const val COMPOSE = "1.0.0-alpha12"
+    const val COMPOSE = "1.5.4"
+    const val COMPOSE_COMPILER = "1.5.5"
 
     // Spotless
-    const val KT_LINT = "0.40.0"
+    const val KT_LINT = "1.1.1"
 }
 
 object Deps {
@@ -27,7 +28,7 @@ object Deps {
     }
 
     object Android {
-        const val GRADLE_PLUGIN = "com.android.tools.build:gradle:7.0.0-alpha07"
+        const val GRADLE_PLUGIN = "com.android.tools.build:gradle:8.2.1"
     }
 
     object AndroidX {
@@ -48,7 +49,7 @@ object Deps {
 
     object Picasso {
         const val PICASSO = "com.squareup.picasso:picasso:2.8"
-        const val TRANSFORMATIONS = "jp.wasabeef:picasso-transformations:2.2.1"
+        const val TRANSFORMATIONS = "jp.wasabeef:picasso-transformations:2.4.0"
     }
 
     const val MAVEN_PUBLISH = "com.vanniktech:gradle-maven-publish-plugin:0.13.0"

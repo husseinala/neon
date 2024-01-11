@@ -53,18 +53,19 @@ fun GlideSample(requestManager: RequestManager) {
 @Composable
 fun SampleScreen(title: String) {
     Scaffold(
-        topBar = { TopAppBar(title = { Text(text = title) }) }
+        topBar = { TopAppBar(title = { Text(text = title) }) },
     ) {
         LazyColumn {
             items(Samples.images) { url ->
                 Neon(
                     url = url,
                     transformation = Transformation.centerCrop().roundedCorners(radius = 16.dp),
-                    modifier = Modifier
-                        .fillParentMaxWidth()
-                        .aspectRatio(1.7f)
-                        .padding(horizontal = 16.dp, vertical = 8.dp),
-                    onLoading = { Center { CircularProgressIndicator() } }
+                    modifier =
+                        Modifier
+                            .fillParentMaxWidth()
+                            .aspectRatio(1.7f)
+                            .padding(horizontal = 16.dp, vertical = 8.dp),
+                    onLoading = { Center { CircularProgressIndicator() } },
                 )
             }
         }
