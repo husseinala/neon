@@ -19,12 +19,13 @@ import com.squareup.picasso.Picasso
 @Composable
 fun ProvidePicassoLoader(
     picasso: Picasso = Picasso.get(),
-    children: @Composable () -> Unit
+    children: @Composable () -> Unit,
 ) {
     ProvideImageLoader(
-        imageLoader = PicassoImageLoader(
-            picasso
-        ),
-        children = children
+        imageLoader =
+            PicassoImageLoader(
+                picasso,
+            ),
+        children = children,
     )
 }
