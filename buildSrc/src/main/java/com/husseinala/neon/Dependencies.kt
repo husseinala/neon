@@ -52,7 +52,7 @@ object Deps {
         const val TRANSFORMATIONS = "jp.wasabeef:picasso-transformations:2.4.0"
     }
 
-    const val MAVEN_PUBLISH = "com.vanniktech:gradle-maven-publish-plugin:0.13.0"
+    const val MAVEN_PUBLISH = "com.vanniktech:gradle-maven-publish-plugin:0.27.0"
 
     const val GLIDE = "com.github.bumptech.glide:glide:4.12.0"
 }
