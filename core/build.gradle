@@ -1,27 +1,31 @@
-import com.husseinala.neon.Deps
-import com.husseinala.neon.Versions
+import com.vanniktech.maven.publish.SonatypeHost
 
 plugins {
-    id 'com.android.library'
-    id 'kotlin-android'
-    id 'com.diffplug.spotless'
-    id 'com.vanniktech.maven.publish'
+    alias libs.plugins.android.library
+    alias libs.plugins.kotlin.gradle
+    alias libs.plugins.spotless
+    alias libs.plugins.maven.publish
 }
 
 spotless {
     kotlin {
         target "**/*.kt"
-        ktlint(Versions.KT_LINT)
+        ktlint(libs.versions.ktlint.get())
     }
+}
+
+mavenPublishing {
+    publishToMavenCentral(SonatypeHost.DEFAULT)
+    signAllPublications()
 }
 
 android {
     namespace "com.husseinala.neon.core"
 
     defaultConfig {
-        compileSdkVersion Versions.COMPILE_SDK
-        minSdkVersion Versions.MIN_SDK
-        targetSdkVersion Versions.TARGET_SDK
+        compileSdk libs.versions.androidCompileSdk.get().toInteger()
+        minSdkVersion libs.versions.androidMinSdk.get().toInteger()
+        targetSdkVersion libs.versions.androidTargetSdk.get().toInteger()
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -34,24 +38,22 @@ android {
         }
     }
 
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-
     buildFeatures {
         compose true
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion Versions.COMPOSE_COMPILER
+        kotlinCompilerExtensionVersion libs.versions.composeKotlinCompiler.get()
     }
 }
 
-dependencies {
-    implementation Deps.Kotlin.STD_LIB
-    implementation Deps.Compose.FOUNDATION
-    implementation Deps.Compose.LAYOUT
+kotlin {
+    jvmToolchain(libs.versions.jvmToolchainVersion.get().toInteger())
+}
 
-    testImplementation Deps.Testing.JUNIT
+dependencies {
+    implementation libs.compose.foundation
+    implementation libs.compose.layout
+
+    testImplementation libs.testing.junit
 }

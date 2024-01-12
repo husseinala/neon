@@ -1,0 +1,50 @@
+[versions]
+androidMinSdk = "21"
+androidCompileSdk = "34"
+androidTargetSdk = "34"
+
+jvmToolchainVersion = "17"
+
+androidGradlePlugin = "8.2.1"
+
+kotlin = "1.9.20"
+spotless = "6.23.3"
+ktlint = "1.1.1"
+mavenPublish = "0.27.0"
+dokka = "1.9.10"
+
+compose = "1.5.4"
+composeKotlinCompiler = "1.5.5"
+activityCompose = "1.8.2"
+
+ktx = "1.12.0"
+
+picasso = "2.8"
+picassoTransformations = "2.4.0"
+
+glide = "4.12.0"
+
+junit = "4.13.2"
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
+android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
+kotlin-gradle = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
+maven-publish = { id = "com.vanniktech.maven.publish", version.ref = "mavenPublish" }
+dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
+
+[libraries]
+compose-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "compose" }
+compose-layout = { group = "androidx.compose.foundation", name = "foundation-layout", version.ref = "compose" }
+compose-material = { group = "androidx.compose.material", name = "material", version.ref = "compose" }
+
+androidx-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "ktx" }
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+
+picasso-core = { group = "com.squareup.picasso", name = "picasso", version.ref = "picasso" }
+picasso-transformations = { group = "jp.wasabeef", name = "picasso-transformations", version.ref = "picassoTransformations" }
+
+glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
+
+testing-junit = { group = "junit", name = "junit", version.ref = "junit" }

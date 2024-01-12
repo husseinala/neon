@@ -1,8 +1,8 @@
 package com.husseinala.neon.sample
 
 import android.os.Bundle
+import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,7 +26,7 @@ import com.husseinala.neon.glide.ProvideGlideLoader
 import com.husseinala.neon.picasso.ProvidePicassoLoader
 import com.squareup.picasso.Picasso
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -55,7 +55,9 @@ fun SampleScreen(title: String) {
     Scaffold(
         topBar = { TopAppBar(title = { Text(text = title) }) },
     ) {
-        LazyColumn {
+        LazyColumn(
+            contentPadding = it,
+        ) {
             items(Samples.images) { url ->
                 Neon(
                     url = url,

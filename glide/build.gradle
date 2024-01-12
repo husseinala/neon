@@ -1,27 +1,31 @@
-import com.husseinala.neon.Versions
-import com.husseinala.neon.Deps
+import com.vanniktech.maven.publish.SonatypeHost
 
 plugins {
-    id 'com.android.library'
-    id 'kotlin-android'
-    id 'com.diffplug.spotless'
-    id 'com.vanniktech.maven.publish'
+    alias libs.plugins.android.library
+    alias libs.plugins.kotlin.gradle
+    alias libs.plugins.spotless
+    alias libs.plugins.maven.publish
 }
 
 spotless {
     kotlin {
         target "**/*.kt"
-        ktlint(Versions.KT_LINT)
+        ktlint(libs.versions.ktlint.get())
     }
+}
+
+mavenPublishing {
+    publishToMavenCentral(SonatypeHost.DEFAULT)
+    signAllPublications()
 }
 
 android {
     namespace "com.husseinala.neon.glide"
-    compileSdkVersion Versions.COMPILE_SDK
+    compileSdk libs.versions.androidCompileSdk.get().toInteger()
 
     defaultConfig {
-        minSdkVersion Versions.MIN_SDK
-        targetSdkVersion Versions.TARGET_SDK
+        minSdkVersion libs.versions.androidMinSdk.get().toInteger()
+        targetSdkVersion libs.versions.androidTargetSdk.get().toInteger()
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -33,28 +37,27 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
 
     buildFeatures {
         compose true
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion Versions.COMPOSE
+        kotlinCompilerExtensionVersion libs.versions.composeKotlinCompiler.get()
     }
+}
+
+kotlin {
+    jvmToolchain(libs.versions.jvmToolchainVersion.get().toInteger())
 }
 
 dependencies {
     api project(':core')
 
-    api Deps.GLIDE
+    api libs.glide
 
-    implementation Deps.Kotlin.STD_LIB
-    implementation Deps.Compose.FOUNDATION
-    implementation Deps.Compose.LAYOUT
+    implementation libs.compose.foundation
+    implementation libs.compose.layout
 
-    testImplementation Deps.Testing.JUNIT
+    testImplementation libs.testing.junit
 }
