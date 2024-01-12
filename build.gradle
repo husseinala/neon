@@ -1,43 +1,13 @@
-import com.husseinala.neon.Deps
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        classpath Deps.Android.GRADLE_PLUGIN
-        classpath Deps.Kotlin.GRADLE_PLUGIN
-        classpath Deps.MAVEN_PUBLISH
-        classpath Deps.Kotlin.DOKKA
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
-    }
-}
-
 plugins {
-    id "com.diffplug.spotless" version "6.23.3"
+    alias libs.plugins.android.application apply false
+    alias libs.plugins.android.library apply false
+    alias libs.plugins.kotlin.gradle apply false
+    alias libs.plugins.maven.publish apply false
+    alias libs.plugins.spotless apply false
+    alias libs.plugins.dokka apply true
 }
 
 allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
-
     group = project.property("GROUP") as String
     version = project.property("VERSION_NAME") as String
-
-    tasks.withType(KotlinCompile).configureEach {
-        kotlinOptions {
-            jvmTarget = "1.8"
-        }
-    }
-}
-
-clean {
-    delete rootProject.buildDir
 }
